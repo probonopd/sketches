@@ -1,3 +1,4 @@
+// Compiles on Arduino IDE 1.6.8 2016/01/19 with http://digistump.com/package_digistump_index.json
 // Simple infrared receiver that is attached to a computer
 // as a hid-generic input,hidraw "USB HID v1.01 Keyboard"
 // Infrared receiver soldered to Micronucleus
@@ -7,7 +8,7 @@
 //                   |-----|
 //                   |  |  |
 //                   |  |  |
-// Micronucleus Pins 0  1  2 
+//    Digispark Pins 0  1  2    <-- TSOP can be soldered directly to the board
 // 0 = Data In
 // 1 = GND (pin pulled low)
 // 2 = VCC (pin pulled high)
