@@ -4,8 +4,8 @@ Receives RC5 infrared remote control codes and simulates an USB keyboard that em
 
 ## Hardware
 
- * Digispark (ATtiny board with USB connector using V-USB)
- * Infrared receiver, e.g., TSOP4838
+ * Digispark (ATtiny board with USB connector using V-USB) ([Digistump](http://digistump.com/products/1) or [eBay](http://www.ebay.com/itm/Digispark-Kickstarter-Micro-General-USB-Development-Board-For-Arduino-ATTINY85-W-/221558382938?hash=item3395e8a15a:g:DPoAAOSw7NNUI8kI))
+ * Infrared receiver, e.g., TSOP4838 ([eBay](http://www.ebay.com/itm/10PCS-38-kHz-Remote-TSOP4838-DIP-3-IR-Receiver-Infrared-Radiation-Module-/311525671902?hash=item48886083de:g:-fsAAOSwaNBUcF-l))
  
 ```
                   |-----|
