@@ -3,7 +3,7 @@ Some Arduino sketches
 
 ## Libraries
 
-Ideally libraries should be installable via the Library Manager. If a library is not present there, open an issue with the library containing
+Ideally libraries should be installable via the [Library Manager](https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ). If a library is not present there, open an issue with the library containing
 
 ```
 Please add to Arduino Library Manager
