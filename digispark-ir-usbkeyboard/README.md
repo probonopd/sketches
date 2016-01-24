@@ -1,6 +1,6 @@
 # digispark-ir-usbkeyboard
 
-Receives RC5 infrared remote control codes and simulates an USB keyboard that emits hid-generic input,hidraw "USB HID v1.01 Keyboard" signals.
+Receives RC5 infrared remote control codes and simulates an USB keyboard that sends hid-generic input,hidraw "USB HID v1.01 Keyboard" to the host computer.
 
 ## Hardware
 
