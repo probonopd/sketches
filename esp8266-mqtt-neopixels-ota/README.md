@@ -20,3 +20,4 @@ If ur struggling I can give you an example."
  * Get initial values, https://forums.adafruit.com/viewtopic.php?f=56&t=88407 and https://github.com/adafruit/Adafruit_MQTT_Library/issues/20 ("retain" is the keyword)
  * Fire effect http://www.walltech.cc/neopixel-fire-effect/
  * See https://github.com/sticilface/ESP8266-wifi/tree/ESP8266_wifi
+ * See https://github.com/AdySan/ESP8266_WebSockets_NeoPixels
