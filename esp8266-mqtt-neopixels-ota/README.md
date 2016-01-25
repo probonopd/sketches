@@ -21,3 +21,4 @@ If ur struggling I can give you an example."
  * Fire effect http://www.walltech.cc/neopixel-fire-effect/
  * See https://github.com/sticilface/ESP8266-wifi/tree/ESP8266_wifi
  * See https://github.com/AdySan/ESP8266_WebSockets_NeoPixels
+ * See https://github.com/jeffeb3/esp8266_lights
