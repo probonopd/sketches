@@ -75,13 +75,11 @@ void setup()
 
 void FadeToColor(uint16_t time, String hexstring) // hexstring is a string like #ff0000 for red; since values are centiseconds, 1000 = 10 seconds
 {
-
   long number = (long) strtol( &hexstring[1], NULL, 16);
   int r = number >> 16;
   int g = number >> 8 & 0xFF;
   int b = number & 0xFF;
   RgbColor color = RgbColor(r, g, b);
-
 
   for (uint16_t pixel = 0; pixel < pixelCount; pixel++)
   {
@@ -98,10 +96,9 @@ void FadeToColor(uint16_t time, String hexstring) // hexstring is a string like 
 
 void loop()
 {
-
   ArduinoOTA.handle();
   yield();
-
+  
   if (animations.IsAnimating())
   {
     animations.UpdateAnimations(); // the normal loop just needs these two to run the active animations
@@ -112,4 +109,5 @@ void loop()
     Serial.println("FadeToColor...");
     FadeToColor(1000, "#ff0000");
   }
+  
 }
