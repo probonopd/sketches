@@ -6,10 +6,10 @@ Receive a color set in adafruit.io via MQTT and frive Neopixels using a esp8266 
 
  * [__Adafruit_MQTT_Library__](https://github.com/adafruit/Adafruit_MQTT_Library) from Libraries Manager
  * __ESP8266mDNS__ and __ArduinoOTA__ coming with esp8266/Arduino installed with Boards Manager and `http://arduino.esp8266.com/staging/package_esp8266com_index.json`
- * [__NeoPixelBus__](https://github.com/Makuna/NeoPixelBus/tree/DmaDriven) DmaDriven branch
+ * [__NeoPixelBus__](https://github.com/Makuna/NeoPixelBus/tree/UartDriven) UartDriven branch
 
 ## Hardware needed
- * A strip of Neopixels attached to the TXD pin.
+ * A strip of Neopixels attached to the GPIO2 pin.
  * I am using a [yellow esp8266 board](http://blog.squix.ch/2015/01/esp8266-test-board-review.html) for this. This board has a built-in RGB LED connected to GPIO13, GPIO12 and GPIO15. I am setting this RGB LED to the same color as the Neopixels, but that is of course not required.
 
 ## TODO
