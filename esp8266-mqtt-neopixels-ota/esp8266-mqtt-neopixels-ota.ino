@@ -1,7 +1,7 @@
 /***************************************************
   Set Neopixels and RGB LED on Yellow Board using MQTT w/ OTA
   Adafruit MQTT Library ESP8266 Example combined with ArduinoOTA,
-  works on IDE 1.6.7 with ESP8266/Arduino staging as of Jan 23, 2016
+  works on IDE 1.6.7 with ESP8266/Arduino staging as of Feb 6, 2016
  ****************************************************/
 #include <ESP8266WiFi.h>
 #include "Adafruit_MQTT.h"
@@ -9,13 +9,11 @@
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
-
-#include <NeoPixelBus.h> // Use the DmaDriven branch, as this works well with OTA ##############################
-
+#include <NeoPixelBus.h> // Use the UartDriven branch, as this works well with OTA ##############################
 #include "credentials.h"
 
 #define pixelCount 60 // this example assumes 4 pixels, making it smaller will cause a failure
-#define pixelPin 3  // ignored for DmaDriven branch (it is always RXD = Pin 3)
+#define pixelPin 2  // ignored for UartDriven branch (it is always GPIO2)
 #define colorSaturation 128
 NeoPixelBus strip = NeoPixelBus(pixelCount, pixelPin);
 
@@ -55,12 +53,7 @@ Adafruit_MQTT_Client mqtt(&client, MQTT_SERVER, AIO_SERVERPORT, MQTT_USERNAME, M
 
 /****************************** Feeds ***************************************/
 
-// Setup a feed called 'photocell' for publishing.
-// Notice MQTT paths for AIO follow the form: <username>/feeds/<feedname>
-const char PHOTOCELL_FEED[] PROGMEM = AIO_USERNAME "/feeds/photocell";
-Adafruit_MQTT_Publish photocell = Adafruit_MQTT_Publish(&mqtt, PHOTOCELL_FEED);
-
-// Setup a feed called 'onoff' for subscribing to changes.
+// Setup a feed called 'color' for subscribing to changes.
 const char COLOR_FEED[] PROGMEM = AIO_USERNAME "/feeds/color";
 Adafruit_MQTT_Subscribe color = Adafruit_MQTT_Subscribe(&mqtt, COLOR_FEED);
 
@@ -69,6 +62,7 @@ Adafruit_MQTT_Subscribe color = Adafruit_MQTT_Subscribe(&mqtt, COLOR_FEED);
 // Bug workaround for Arduino 1.6.6, it seems to need a function declaration
 // for some reason (only affects ESP8266, likely an arduino-builder bug).
 void MQTT_connect();
+
 
 void setColor(String hexstring)
 {
@@ -89,8 +83,10 @@ void setColor(String hexstring)
 
 }
 
-void setup() {
 
+void setup() {
+  Serial.begin(115200);
+  delay(10);
 
   // this resets all the neopixels to an off state
   strip.Begin();
@@ -104,13 +100,20 @@ void setup() {
   strip.Show();
 
 
-  WiFi.mode(WIFI_STA);
+  // Connect to WiFi access point.
+  Serial.println(); Serial.println();
+  Serial.print("Connecting to ");
+  Serial.println(WLAN_SSID);
+
   WiFi.begin(WLAN_SSID, WLAN_PASS);
-  while (WiFi.waitForConnectResult() != WL_CONNECTED) {
-    Serial.println("Connection Failed! Rebooting...");
-    delay(5000);
-    ESP.restart();
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
   }
+  Serial.println();
+
+  Serial.println("WiFi connected");
+  Serial.println("IP address: "); Serial.println(WiFi.localIP());
 
   // Port defaults to 8266
   // ArduinoOTA.setPort(8266);
@@ -121,7 +124,25 @@ void setup() {
   // No authentication by default
   // ArduinoOTA.setPassword((const char *)"123");
 
-
+  ArduinoOTA.onStart([]() {
+    Serial.println("Start");
+    strip.SetPixelColor(0, blue); // This seems to get ignored; why?
+  });
+  ArduinoOTA.onEnd([]() {
+    Serial.println("\nEnd");
+    strip.SetPixelColor(0, green); // This seems to get ignored; why?
+  });
+  ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
+    Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
+  });
+  ArduinoOTA.onError([](ota_error_t error) {
+    Serial.printf("Error[%u]: ", error);
+    if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
+    else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
+    else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
+    else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
+    else if (error == OTA_END_ERROR) Serial.println("End Failed");
+  });
   ArduinoOTA.begin();
 
   // Setup MQTT subscription for onoff feed.
@@ -135,12 +156,11 @@ void setup() {
   digitalWrite(G_LED, LOW);
   digitalWrite(B_LED, LOW);
 
-  strip.SetPixelColor(0, black);
+  strip.SetPixelColor(0, green);
   strip.SetPixelColor(1, black);
   strip.SetPixelColor(2, black);
   strip.SetPixelColor(3, black);
   strip.Show();
-
 
 }
 
@@ -162,20 +182,17 @@ void loop() {
   Adafruit_MQTT_Subscribe *subscription;
   while ((subscription = mqtt.readSubscription(5000))) {
     if (subscription == &color) {
+      Serial.println(F("Got color"));
       setColor((char *)color.lastread);
     }
   }
 
-  // Now we can publish stuff!
-  photocell.publish(x++);
-
-
   // ping the server to keep the mqtt connection alive
-  /*
-    if(! mqtt.ping()) {
+  // NOT required if you are publishing once every KEEPALIVE seconds
+  if (! mqtt.ping()) {
     mqtt.disconnect();
-    }
-  */
+  }
+
 }
 
 // Function to connect and reconnect as necessary to the MQTT server.
@@ -192,7 +209,8 @@ void MQTT_connect() {
 
   uint8_t retries = 3;
   while ((ret = mqtt.connect()) != 0) { // connect will return 0 for connected
-
+    Serial.println(mqtt.connectErrorString(ret));
+    Serial.println("Retrying MQTT connection in 5 seconds...");
     mqtt.disconnect();
     delay(5000);  // wait 5 seconds
     retries--;
@@ -201,5 +219,5 @@ void MQTT_connect() {
       while (1);
     }
   }
-
+  Serial.println("MQTT Connected!");
 }
