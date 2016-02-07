@@ -43,7 +43,7 @@ void FadeToColor(uint16_t time, String hexstring) // hexstring is a string like 
 void handleRequest() {
   String message = "<html><body>\n";
   message += "<a href='?color=xffdd55'>Neutral White</a><br>\n";
-  message += "<a href='?color=xffee33'>Warm White</a><br>\n";
+  message += "<a href='?color=xffaa33'>Warm White</a><br>\n";
   message += "<a href='?color=xddeeff'>Cool White</a><br>\n";
   message += "<a href='?color=x0066ff'>Blue</a><br>\n";
   message += "<a href='?color=x000000'>Black</a><br>\n";
