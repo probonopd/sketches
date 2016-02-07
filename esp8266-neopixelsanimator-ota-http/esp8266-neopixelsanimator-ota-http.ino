@@ -29,12 +29,12 @@ void setup()
 
   Serial.begin(115200);
   Serial.println("Booting");
+
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
-  while (WiFi.waitForConnectResult() != WL_CONNECTED) {
-    Serial.println("Connection Failed!");
-    FadeToColor(100, "#010000"); // Darkest red
-  }
+  if (WiFi.waitForConnectResult() != WL_CONNECTED)
+    return;
+
 
   // Port defaults to 8266
   // ArduinoOTA.setPort(8266);
