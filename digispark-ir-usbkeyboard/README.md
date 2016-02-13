@@ -22,4 +22,5 @@ Digispark Pins 0  1  2
 ## TODO
 
  * Receiving code sometimes misses the meaning of signals. Replace with IRLib receiving code (blocked by https://github.com/digistump/DigistumpArduino/issues/21)
+ * Try https://github.com/digistump/DigistumpArduino/issues/20#event-549290103
  * Send something over USB to the host PC that can be recognized by LIRC, possibly along the lines of http://notepad.xavierdetourbet.com/?p=258
