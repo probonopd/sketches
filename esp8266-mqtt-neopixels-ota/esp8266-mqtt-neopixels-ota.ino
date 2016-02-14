@@ -4,12 +4,12 @@
   works on IDE 1.6.7 with ESP8266/Arduino staging as of Feb 6, 2016
  ****************************************************/
 #include <ESP8266WiFi.h>
-#include "Adafruit_MQTT.h"
+#include "Adafruit_MQTT.h" // https://github.com/adafruit/Adafruit_MQTT_Library/tree/master
 #include "Adafruit_MQTT_Client.h"
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
-#include <NeoPixelBus.h> // Use the UartDriven branch, as this works well with OTA ##############################
+#include <NeoPixelBus.h> // https://github.com/Makuna/NeoPixelBus/tree/UartDriven
 #include "credentials.h"
 
 #define pixelCount 60 // this example assumes 4 pixels, making it smaller will cause a failure

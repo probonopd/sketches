@@ -1,15 +1,14 @@
 // Tested with /Arduino-1.6.8.hourly201602020926.esp04c6609-x86_64.AppImage
 // Set color like this: http://esp8266-xxxxxx.local./?color=xffee55 (replace with your ChipID)
 
-#include <NeoPixelBus.h> // git; UartDriven branch; GPIO2
+#include <NeoPixelBus.h> // git; UartDriven branch; GPIO2 ; https://github.com/Makuna/NeoPixelBus/tree/UartDriven
 #include <functional>
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
 #include <ESP8266WebServer.h>
 #include <DNSServer.h>
-#include <WiFiManager.h> // git 55c751c works but needs 1 manual restart after entering credentials; https://github.com/tzapu/WiFiManager
-
+#include <WiFiManager.h> // git 55c751c works but needs 1 manual restart after entering credentials; https://github.com/tzapu/WiFiManager/archive/master.zip
 ESP8266WebServer httpserver(80);
 
 #define pixelCount 30 // make sure to set this to the number of pixels in your strip
