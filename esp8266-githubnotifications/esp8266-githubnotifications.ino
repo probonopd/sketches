@@ -100,6 +100,7 @@ void poll() {
     if(line.indexOf("Last-Modified:") == 0) {
       Serial.print("--> gh_last_modified --> ");
       gh_last_modified = line.substring(15);
+      gh_last_modified.trim();
       Serial.println(gh_last_modified);
     }    
       
